@@ -18,5 +18,32 @@ const validateLogin = (req) => {
     throw new Error("Email is not valid !");
   }
 };
+const validateEditProfile = (req) => {
+  const allowedEditField = [
+    "firstName",
+    "lastName",
+    "age",
+    "gender",
+    "photoUrl",
+    "about",
+    "skills",
+  ];
+  const isEditAllowed = Object.keys(req.body).every((field) =>
+    allowedEditField.includes(field)
+  );
+  return isEditAllowed;
+};
 
-module.exports = { validateSignUpData, validateLogin };
+const validateForgetPassword = (req) => {
+  const { password } = req.body;
+  if (!validator.isStrongPassword(password)) {
+    throw new Error("Please enter strong password");
+  }
+};
+
+module.exports = {
+  validateSignUpData,
+  validateLogin,
+  validateEditProfile,
+  validateForgetPassword,
+};
